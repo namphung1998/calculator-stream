@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const ComputationsController = require('./controllers/computations.controller');
 
@@ -24,6 +25,6 @@ const io = SocketIO(server);
 
 const port = process.env.PORT || 4000;
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log('Server listening on port', port);
 });

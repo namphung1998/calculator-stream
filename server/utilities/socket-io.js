@@ -4,6 +4,7 @@ const { redisClient } = require('./redis');
 
 module.exports = server => {
   const io = SocketIO(server);
+  io.origins('*:*') // 
   io.on('connection', async socket => {
     let client = await redisClient();
 
