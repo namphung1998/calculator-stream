@@ -1,0 +1,16 @@
+version: '3'
+services:
+  server:
+    build: ./server
+    ports:
+      - "4000:4000"
+    volumes: 
+      - "./server:/usr/src/server"
+      - "/usr/src/node_modules"
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - "./client:/usr/src/client"
+      - "/usr/src/node_modules"

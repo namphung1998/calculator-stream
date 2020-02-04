@@ -1,0 +1,17 @@
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  margin: 24px 24px;
+  background-color: rgba(0, 0, 255, 0.1);
+
+  .keyboard-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 16px;
+  }
+
+  .equal {
+    background-color: rgba(0, 255, 0, 0.2);
+  }
+}
