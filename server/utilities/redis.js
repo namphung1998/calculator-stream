@@ -20,13 +20,13 @@ const redisClient = () => {
 const getComputations = () => {
   return redisClient()
     .then(client => {
-      return client.lrangeAsync('computations', 0, -1)
+      return client.lrangeAsync('computations', -10, -1)
     })
 }
 
 const addComputation = comp => {
   return redisClient()
-    .then(client => client.rpush('computations', comp))
+    .then(client => client.rpushAsync('computations', comp))
 }
 
 module.exports = {

@@ -1,6 +1,5 @@
 export const strToExpressionArray = (str) => {
   const res = [];
-  let i = 0
   let current = '';
 
   for (let i = 0; i < str.length; i++) {

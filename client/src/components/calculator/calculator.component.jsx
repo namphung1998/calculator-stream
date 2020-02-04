@@ -7,13 +7,13 @@ import Keyboard from '../keyboard/keyboard.component';
 import Editor from '../editor/editor.component';
 
 import { evaluate, strToExpressionArray } from '../../utilities/compute';
+import { apiCall } from '../../utilities/apiCall';
 import History from '../history/history.component';
 
 function Calculator() {
   const [editorValue, setEditorValue] = useState('');
   const [calculations, setCalculations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const _socket = io('http://localhost:4000');
@@ -21,8 +21,20 @@ function Calculator() {
       setLoading(false);
     });
 
-    setSocket(_socket)
-  }, [])
+    _socket.on('hello', console.log);
+
+    _socket.on('newComputation', computation => setCalculations(c => {
+      console.log(computation);
+      return [...c, computation];
+    }));
+
+  }, []);
+
+  useEffect(() => {
+    apiCall('/api/computations')
+      .then(res => setCalculations(res))
+      .catch(console.log);
+  }, []);
 
   const onClick = e => {
     setEditorValue(editorValue + e.target.value);
@@ -33,8 +45,17 @@ function Calculator() {
     const result = evaluate(infix);
 
     if (!isNaN(result)) {
-      setCalculations([...calculations, `${editorValue}=${result}`]);
-      setEditorValue('');
+      const computation = `${editorValue}=${result}`;
+
+      apiCall('/api/computations', {
+        method: 'POST',
+        body: JSON.stringify({ computation })
+      })
+        .then(res => {
+          if (res.success) {
+            setEditorValue('');
+          }
+        })
     }
   }
 

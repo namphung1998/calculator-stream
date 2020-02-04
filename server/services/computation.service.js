@@ -1,7 +1,10 @@
-const { addComputation, getComputations } = require('../utilities/redis');
+const { redisClient, addComputation, getComputations } = require('../utilities/redis');
 
 const add = (computation) => {
-  return addComputation(computation)
+  return redisClient().then(client => {
+    client.publish('newComputation', computation);
+    return addComputation(computation);
+  });
 };
 
 const getAll = () => {
