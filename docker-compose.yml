@@ -6,11 +6,9 @@ services:
       - "4000:4000"
     volumes: 
       - "./server:/usr/src/server"
-      - "/usr/src/node_modules"
-  client:
-    build: ./client
+    environment: 
+      REDIS_URI: redis://redis:6379
+  redis:
+    image: redis
     ports:
-      - "3000:3000"
-    volumes:
-      - "./client:/usr/src/client"
-      - "/usr/src/node_modules"
+      - "6379:6379"

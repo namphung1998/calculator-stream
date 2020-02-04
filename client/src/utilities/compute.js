@@ -53,7 +53,7 @@ export const infixToSuffix = str => {
       res.push(c);
     } else if (c === '(') {
       stack.push(c);
-    } else if (c == ')') {
+    } else if (c === ')') {
       while (stack.length !== 0 && stack[stack.length - 1] !== '(') {
         res.push(stack.pop());
       }
