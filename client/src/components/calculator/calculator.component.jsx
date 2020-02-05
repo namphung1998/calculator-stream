@@ -16,16 +16,19 @@ function Calculator() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const _socket = io('http://localhost:4000');
-    _socket.on('connect', () => {
+    const socket = io('http://localhost:4000');
+    socket.on('connect', () => {
       setLoading(false);
     });
 
-    _socket.on('hello', console.log);
+    socket.on('newComputation', computation => setCalculations(prevComputations => {
+      const newComputations = [...prevComputations, computation];
 
-    _socket.on('newComputation', computation => setCalculations(c => {
-      console.log(computation);
-      return [...c, computation];
+      if (newComputations.length < 10) {
+        return newComputations;
+      }
+
+      return newComputations.slice(-10);
     }));
 
   }, []);
@@ -36,7 +39,7 @@ function Calculator() {
       .catch(console.log);
   }, []);
 
-  const onClick = e => {
+  const onSymbolClick = e => {
     setEditorValue(editorValue + e.target.value);
   }
 
@@ -59,15 +62,29 @@ function Calculator() {
     }
   }
 
+  const onDeleteClick = () => {
+    if (editorValue.length > 0) {
+      setEditorValue(editorValue.slice(0, -1));
+    }
+  }
+
+  const onClearClick = () => setEditorValue('')
+
   if (loading) {
     return <h1>Loading...</h1>
   }
 
   return (
     <div className='calculator'>
-      <h1>Calculator</h1>
-      <Editor expression={editorValue} />
-      <Keyboard onClick={onClick} onComputeClick={onComputeClick} />
+      <div className='calculator-editor'>
+        <Editor expression={editorValue} />
+        <Keyboard 
+          onClick={onSymbolClick} 
+          onComputeClick={onComputeClick}
+          onDeleteClick={onDeleteClick}
+          onClearClick={onClearClick}
+        />
+      </div>
       <History calculations={calculations} />
     </div>
   );
