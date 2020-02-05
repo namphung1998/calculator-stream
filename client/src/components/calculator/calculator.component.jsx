@@ -16,7 +16,7 @@ function Calculator() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const socket = io('http://localhost:4000');
+    const socket = io();
     socket.on('connect', () => {
       setLoading(false);
     });
