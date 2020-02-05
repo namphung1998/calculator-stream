@@ -18,6 +18,7 @@ app.use(cors());
 
 app.get('/api/computations', ComputationsController.getComputations);
 app.post('/api/computations', ComputationsController.addComputation);
+app.get('/api/ping', (req, res) => res.send('<h1>pong</h1>'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client', 'build')));
