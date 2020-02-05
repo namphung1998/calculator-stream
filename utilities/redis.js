@@ -5,7 +5,7 @@ promisifyAll(redis.RedisClient.prototype);
 
 const redisClient = () => {
   return new Promise((resolve, reject) => {
-    let client = redis.createClient(process.env.REDIS_URI);
+    let client = redis.createClient(process.env.REDIS_URL);
 
     client.on('error', err => {
       reject(err.message);
