@@ -9,10 +9,7 @@ const getComputations = (req, res) => {
 const addComputation = (req, res) => {
   const { computation } = req.body;
   ComputationService.add(computation)
-    .then(c => {
-      console.log(c);
-      res.send({ success: true })
-    })
+    .then(() => res.send({ success: true }))
     .catch(err => res.status(400).send({ error: 'Something went wrong' }));
 };
 
