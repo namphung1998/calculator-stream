@@ -17,16 +17,21 @@ const redisClient = () => {
   });
 }
 
-const getComputations = () => {
-  return redisClient()
-    .then(client => {
-      return client.lrangeAsync('computations', -10, -1)
-    })
+const getComputations = async () => {
+  const client = await redisClient();
+
+  const result = await client.lrangeAsync('computations', -10, -1);
+  client.quit();
+  return result;
+
 }
 
-const addComputation = comp => {
-  return redisClient()
-    .then(client => client.rpushAsync('computations', comp))
+const addComputation = async comp => {
+  const client = await redisClient();
+
+  const result = await client.rpushAsync('computations', comp);
+  client.quit();
+  return result;
 }
 
 module.exports = {

@@ -3,6 +3,7 @@ const { redisClient, addComputation, getComputations } = require('../utilities/r
 const add = (computation) => {
   return redisClient().then(client => {
     client.publish('newComputation', computation);
+    client.quit();
     return addComputation(computation);
   });
 };
