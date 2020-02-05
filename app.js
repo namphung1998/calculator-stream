@@ -38,6 +38,11 @@ io.on('connection', socket => {
         socket.emit('newComputation', message);
       }
     });
+
+    socket.on('disconnect', () => {
+      client.unsubscribe();
+      client.quit();
+    })
   });
 });
 
