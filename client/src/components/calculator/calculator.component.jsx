@@ -13,12 +13,13 @@ import History from '../history/history.component';
 function Calculator() {
   const [editorValue, setEditorValue] = useState('');
   const [calculations, setCalculations] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [socketLoading, setSocketLoading] = useState(true);
+  const [historyLoading, setHistoryLoading] = useState(true);
 
   useEffect(() => {
     const socket = io();
     socket.on('connect', () => {
-      setLoading(false);
+      setSocketLoading(false);
     });
 
     socket.on('newComputation', computation => setCalculations(prevComputations => {
@@ -35,11 +36,17 @@ function Calculator() {
 
   useEffect(() => {
     apiCall('/api/computations')
-      .then(res => setCalculations(res))
+      .then(res => {
+        setCalculations(res);
+        setHistoryLoading(false);
+      })
       .catch(console.log);
   }, []);
 
   const onSymbolClick = e => {
+    if (editorValue.length === 15) {
+      return alert('Your expression cannot exceed 15 characters!');
+    }
     setEditorValue(editorValue + e.target.value);
   }
 
@@ -70,7 +77,7 @@ function Calculator() {
 
   const onClearClick = () => setEditorValue('')
 
-  if (loading) {
+  if (socketLoading || historyLoading) {
     return <h1>Loading...</h1>
   }
 

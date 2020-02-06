@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
+    "client": "cd client && yarn start",
     "build": "cd client && yarn build",
     "heroku-postbuild": "cd client && yarn && yarn --only=dev --no-shrinkwrap && yarn build"
   },
