@@ -9,7 +9,7 @@ function History({ calculations }) {
   return (
     <div className='history'>
       <h2>History</h2>
-      {calculations.map((item, i) => (
+      {calculations.slice().reverse().map((item, i) => (
         <p key={item + String(i)}>{item}</p>
       ))}
     </div>
