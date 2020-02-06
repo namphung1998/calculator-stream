@@ -39,7 +39,7 @@ Then, use this command to start the server
 ```
 yarn dev
 ```
-We are using `nodemon` to enable hot reloading for the server code. To get the client application started, change directory into the `client` folder, then use the following two commands
+I used `nodemon` to enable hot reloading for the server code. To get the client application started, change directory into the `client` folder, then use the following two commands
 ```
 yarn 
 ```
@@ -51,6 +51,6 @@ yarn start
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Architecture:
-1. Server: The server is written in Node.js, and uses the Express framework. We also used `socket.io` as a high-level WebSocket API to enable two-way communication between the server and the client.
+1. Server: The server is written in Node.js, and uses the Express framework. I also used `socket.io` as a high-level WebSocket API to enable two-way communication between the server and the client.
 2. Data Storage: We use Redis both as a persistence data store and a Pub/Sub broker.
 3. Client: The client application is written using the React library.
